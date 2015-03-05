@@ -12,7 +12,7 @@
 @interface CardScrollViewController () <UIScrollViewDelegate>
 {
     UIScrollView *scrollView;
-    NSMutableArray *allPanels;
+    NSMutableArray *allCards;
 }
 
 @end
@@ -27,46 +27,50 @@
 -(void)setup
 {
     // initialize variables
-    int numPanels = 10;
-    float panelHeight = 568;
-    allPanels = [[NSMutableArray alloc] initWithCapacity:numPanels];
+    int numCards = 10;
+    float cardHeight = 568;
+    allCards = [[NSMutableArray alloc] initWithCapacity:numCards];
     
     // configure the background color
     self.view.backgroundColor = [UIColor blackColor];
     
     
-    // create holder to put all the panels in - this holder will go inside the scroll view
-    float holderHeight = panelHeight * numPanels;
+    // create holder to put all the cards in - this holder will go inside the scroll view
+    float holderHeight = cardHeight * numCards;
     CGRect holderFrame = CGRectMake(0, 0, 320, holderHeight);
     UIView *holder = [[UIView alloc] initWithFrame:holderFrame];
     
     
-    // create panels
-    CGRect panelFrame = CGRectMake(0, 0, 320, panelHeight);
+    // create cards
+    CGRect cardFrame = CGRectMake(0, 0, 320, cardHeight);
     
-    for (int i=0; i<numPanels; i++)
+    for (int i=0; i<numCards; i++)
     {
-        // adust vertical position and create panel
-        panelFrame.origin.y = i * panelHeight;
-        CardView *panel = [[CardView alloc] initWithFrame:panelFrame];
+        // adust vertical position and create card
+        cardFrame.origin.y = i * cardHeight;
+        CardView *card = [[CardView alloc] initWithFrame:cardFrame];
+        
+        // add tap recognizer to card
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onCardTap:)];
+        [card addGestureRecognizer:tapRecognizer];
         
         // get a unique cycling hue value for each card
-        float hueRatio = (float)i / (float)numPanels;
-        panel.backgroundColor = [UIColor colorWithHue:hueRatio saturation:1.0 brightness:1.0 alpha:1.0];
+        float hueRatio = (float)i / (float)numCards;
+        card.backgroundColor = [UIColor colorWithHue:hueRatio saturation:1.0 brightness:1.0 alpha:1.0];
         
-        // create a label to number the panels
-        UILabel *label = [[UILabel alloc] initWithFrame:panel.bounds];
+        // create a label to number the cards
+        UILabel *label = [[UILabel alloc] initWithFrame:card.bounds];
         label.text = [NSString stringWithFormat:@"%i", i%10];
         label.textColor = [UIColor colorWithHue:hueRatio saturation:1.0 brightness:0.8 alpha:1.0];
         label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont fontWithName:@"Helvetica" size:panelFrame.size.height];
-        [panel addSubview:label];
+        label.font = [UIFont fontWithName:@"Helvetica" size:cardFrame.size.height];
+        [card addSubview:label];
         
-        // add panel to the holder
-        [holder addSubview:panel];
+        // add card to the holder
+        [holder addSubview:card];
         
-        // add panel to panels array
-        [allPanels addObject:panel];
+        // add card to allCards array
+        [allCards addObject:card];
     }
     
     
@@ -75,14 +79,15 @@
     scrollView = [[UIScrollView alloc] initWithFrame:frame];
     scrollView.pagingEnabled = YES;
     scrollView.delegate = self;
+    scrollView.showsVerticalScrollIndicator = NO;
     
-    // add panel holder to scroll view
+    // add card holder to scroll view
     [scrollView addSubview:holder];
     scrollView.contentSize = scrollView.frame.size;
     
     // add the scroll view and set the content size
     [self.view addSubview:scrollView];
-    scrollView.contentSize = CGSizeMake(320, panelHeight*numPanels);
+    scrollView.contentSize = CGSizeMake(320, cardHeight*numCards);
     
     // call animateCards to initialize positions
     [self animateCards];
@@ -101,10 +106,10 @@
     float scrollLoc = scrollView.contentOffset.y + self.view.frame.size.height * 0.5;
     float range = 600;
     
-    for (int i=0; i<allPanels.count; i++)
+    for (int i=0; i<allCards.count; i++)
     {
-        CardView *panel = [allPanels objectAtIndex:i];
-        float offset = panel.orgPos.y - scrollLoc;
+        CardView *card = [allCards objectAtIndex:i];
+        float offset = card.orgCenter.y - scrollLoc;
         float dist = fabsf(offset);
         
         if (dist < range)
@@ -114,16 +119,25 @@
             if (offset > 0)
             {
                 float newRatio = 1.0 + ( (1.0 - ratio) * 1.0 );
-                panel.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(newRatio, newRatio), CGAffineTransformMakeTranslation(0, offset*0.4));
+                card.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(newRatio, newRatio), CGAffineTransformMakeTranslation(0, offset*0.4));
             }
             else
             {
-                panel.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(ratio, ratio), CGAffineTransformMakeTranslation(0, -offset*0.8));
-                panel.alpha = ratio;
+                card.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(ratio, ratio), CGAffineTransformMakeTranslation(0, -offset*0.8));
+                card.alpha = ratio;
             }
             
         }
     }
+}
+
+-(void)onCardTap:(UITapGestureRecognizer *)recognizer
+{
+    // get refrence to tapped card
+    CardView *card = (CardView *)recognizer.view;
+    
+    // set content offset of scroll view to the original frame position of the tapped card
+    [scrollView setContentOffset:card.orgFrame.origin animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

@@ -10,6 +10,7 @@
 
 @interface CardView : UIView
 
-@property CGPoint orgPos;
+@property CGPoint orgCenter;
+@property CGRect orgFrame;
 
 @end

@@ -14,7 +14,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.orgPos = self.center;
+        self.orgCenter = self.center;
+        self.orgFrame = self.frame;
     }
     return self;
 }
