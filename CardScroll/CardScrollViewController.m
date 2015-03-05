@@ -42,7 +42,7 @@
     
     
     // create panels
-    CGRect panelFrame = CGRectMake(0, 0, 320, 568);
+    CGRect panelFrame = CGRectMake(0, 0, 320, panelHeight);
     
     for (int i=0; i<numPanels; i++)
     {
@@ -99,22 +99,17 @@
 -(void)animateCards
 {
     float scrollLoc = scrollView.contentOffset.y + self.view.frame.size.height * 0.5;
-
     float range = 600;
-    float offset;
-    
     
     for (int i=0; i<allPanels.count; i++)
     {
         CardView *panel = [allPanels objectAtIndex:i];
-        offset = panel.orgPos.y - scrollLoc;
+        float offset = panel.orgPos.y - scrollLoc;
+        float dist = fabsf(offset);
         
-        if (fabsf(offset) < range)
+        if (dist < range)
         {
-            float ratio = ( range - fabsf(offset) ) / range;
-            
-            NSLog(@"ratio = %f", ratio);
-            
+            float ratio = (range - dist) / range;
             
             if (offset > 0)
             {
