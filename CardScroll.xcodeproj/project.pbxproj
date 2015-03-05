@@ -21,6 +21,8 @@
 		402C832C19926C16001B7CC4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 402C830E19926C16001B7CC4 /* UIKit.framework */; };
 		402C833419926C16001B7CC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 402C833219926C16001B7CC4 /* InfoPlist.strings */; };
 		402C833619926C16001B7CC4 /* CardScrollTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 402C833519926C16001B7CC4 /* CardScrollTests.m */; };
+		402C834419926D98001B7CC4 /* CardScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 402C834319926D98001B7CC4 /* CardScrollViewController.m */; };
+		402C8347199277D3001B7CC4 /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 402C8346199277D3001B7CC4 /* CardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,10 @@
 		402C833119926C16001B7CC4 /* CardScrollTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CardScrollTests-Info.plist"; sourceTree = "<group>"; };
 		402C833319926C16001B7CC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		402C833519926C16001B7CC4 /* CardScrollTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardScrollTests.m; sourceTree = "<group>"; };
+		402C834219926D98001B7CC4 /* CardScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardScrollViewController.h; sourceTree = "<group>"; };
+		402C834319926D98001B7CC4 /* CardScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardScrollViewController.m; sourceTree = "<group>"; };
+		402C8345199277D3001B7CC4 /* CardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardView.h; sourceTree = "<group>"; };
+		402C8346199277D3001B7CC4 /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,10 @@
 				402C831C19926C16001B7CC4 /* Main.storyboard */,
 				402C831F19926C16001B7CC4 /* ViewController.h */,
 				402C832019926C16001B7CC4 /* ViewController.m */,
+				402C834219926D98001B7CC4 /* CardScrollViewController.h */,
+				402C834319926D98001B7CC4 /* CardScrollViewController.m */,
+				402C8345199277D3001B7CC4 /* CardView.h */,
+				402C8346199277D3001B7CC4 /* CardView.m */,
 				402C832219926C16001B7CC4 /* Images.xcassets */,
 				402C831119926C16001B7CC4 /* Supporting Files */,
 			);
@@ -250,6 +260,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				402C832119926C16001B7CC4 /* ViewController.m in Sources */,
+				402C834419926D98001B7CC4 /* CardScrollViewController.m in Sources */,
+				402C8347199277D3001B7CC4 /* CardView.m in Sources */,
 				402C831B19926C16001B7CC4 /* AppDelegate.m in Sources */,
 				402C831719926C16001B7CC4 /* main.m in Sources */,
 			);

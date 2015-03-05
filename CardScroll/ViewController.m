@@ -7,8 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "CardScrollViewController.h"
+
 
 @interface ViewController ()
+{
+    CardScrollViewController *cardScroll;
+}
 
 @end
 
@@ -18,6 +23,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    cardScroll = [[CardScrollViewController alloc] init];
+    cardScroll.view.frame = self.view.bounds;
+    [self.view addSubview:cardScroll.view];
+    
 }
 
 - (void)didReceiveMemoryWarning
