@@ -84,38 +84,19 @@
     [self.view addSubview:scrollView];
     scrollView.contentSize = CGSizeMake(320, panelHeight*numPanels);
     
-    // call animate to initialize offsets
-//    [self animate2];
+    // call animateCards to initialize positions
+    [self animateCards];
 
 }
 
 
 -(void)scrollViewDidScroll:(UIScrollView *)aScrollView
 {
-//    [self animate2];
+    [self animateCards];
 }
 
--(void)animate1
-{
-    float scrollLoc = scrollView.contentOffset.y + self.view.frame.size.height * 0.5;
-    
-    float range = 600;
-    float offset;
-    
-    for (int i=0; i<allPanels.count; i++)
-    {
-        CardView *panel = [allPanels objectAtIndex:i];
-        offset = panel.orgPos.y - scrollLoc;
-        
-        if (fabsf(offset) < range)
-        {
-            float ratio = 1.0 - ( (fabsf(offset)/range) * 0.5 );
-            panel.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(ratio, ratio), CGAffineTransformMakeTranslation(0, -offset*0.3));
-        }
-    }
-}
 
--(void)animate2
+-(void)animateCards
 {
     float scrollLoc = scrollView.contentOffset.y + self.view.frame.size.height * 0.5;
 
@@ -147,8 +128,6 @@
             }
             
         }
-        
-        
     }
 }
 
