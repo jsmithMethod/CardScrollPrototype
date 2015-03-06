@@ -77,7 +77,7 @@
     // create scroll view
     CGRect frame = CGRectMake(0, 0, 320, 568);
     scrollView = [[UIScrollView alloc] initWithFrame:frame];
-    scrollView.pagingEnabled = YES;
+    scrollView.pagingEnabled = YES  ;
     scrollView.delegate = self;
     scrollView.showsVerticalScrollIndicator = NO;
     
@@ -104,25 +104,33 @@
 -(void)animateCards
 {
     float scrollLoc = scrollView.contentOffset.y + self.view.frame.size.height * 0.5;
+    
+    // transformations are CPU intensive, having a minimum range for transformations will help with performance
     float range = 600;
     
     for (int i=0; i<allCards.count; i++)
     {
+        // get a reference to the current card
         CardView *card = [allCards objectAtIndex:i];
+        
+        // find the distance of the card to the center of the visible area
         float offset = card.orgCenter.y - scrollLoc;
         float dist = fabsf(offset);
         
         if (dist < range)
         {
+            // the ratio tells us how far the card has traveled into our range
             float ratio = (range - dist) / range;
             
             if (offset > 0)
             {
+                // motion applied if card is below the center
                 float newRatio = 1.0 + ( (1.0 - ratio) * 1.0 );
                 card.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(newRatio, newRatio), CGAffineTransformMakeTranslation(0, offset*0.4));
             }
             else
             {
+                // motion applied if card is above the center
                 card.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(ratio, ratio), CGAffineTransformMakeTranslation(0, -offset*0.8));
                 card.alpha = ratio;
             }
